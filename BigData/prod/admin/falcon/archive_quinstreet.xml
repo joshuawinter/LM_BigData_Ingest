@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<feed description="Quinstreet summary archive" name="QuinstreetArchive"
+    xmlns="uri:falcon:feed:0.1">
+    <groups>quinstreetOut</groups>
+
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+    <late-arrival cut-off="hours(1)" />
+
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2010-01-01T00:00Z" end="2099-12-31T00:00Z" />
+            <retention limit="months(240)" action="delete" />
+        </cluster>
+    </clusters>
+
+    <locations>
+        <location type="data" path="/archive/project/marketing/b2b/quinstreet/${YEAR}-${MONTH}-${DAY}-${HOUR}" />
+        <location type="stats" path="/apps/falcon/stats/project/marketing/b2b/quinstreet" />
+        <location type="meta" path="/apps/falcon/meta/project/marketing/b2b/quinstreet" />
+    </locations>
+
+    <ACL owner="hdfs" group="hdfs" permission="0x644" />
+
+    <schema location="/none" provider="none" />
+</feed>

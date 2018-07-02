@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="uri:falcon:process:0.1" name="Vantage">
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2014-10-23T05:00Z" end="2024-12-30T00:00Z" />
+        </cluster>
+    </clusters>
+    <parallel>1</parallel>
+    <order>FIFO</order>
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+
+    <inputs>
+        <input name="input" feed="VantageFlume" start="now(0,0)" end="now(0,0)" />
+    </inputs>
+
+    <outputs>
+        <output name="output" feed="VantageArchive" instance="now(0,0)" />
+    </outputs>
+
+    <properties>
+        <property name="jobTracker" value="hdp001-yarn:8050" />
+        <property name="nameNode" value="hdfs://hdp001-nn:8020" />
+        <property name="table" value="vantage" />
+        <property name="fields" value="
+            Date STRING, -- TIMESTAMP
+            Advertiser_Campaign_Name STRING,
+            BidCategory STRING,
+            Sub_Vertical_Name STRING,
+            State STRING,
+            Impressions STRING, -- INT
+            Clicks STRING, -- INT
+            CTR STRING, --
+            AvgPos STRING, -- DOUBLE
+            Cost STRING, -- DOUBLE            
+            CPC STRING, -- DOUBLE
+            Landing_URL STRING" />
+            <!--
+            Date,Advertiser_Campaign_Name,BidCategory,Sub_Vertical_Name,State,Imp,AvgPos,Clicks,CTR,CPC,Cost,Landing_URL
+            2014-12-07,Alabama Home Insurance A,Standard Bid,Home Insurance,AL,64,2.88,0,0.00%,$0.00,$0.00,http://welcome.libertymutual.com/campaigns/aggregators/v2/home-insurance-TC.html?cmpgncde=253&keyCode=IABWH000&src=im-dagg-phc-brwAL1407103970&zipCode={zipcode}&pid={source_id}&clickid={engagementID}&insured={currentlyinsured}&age={age}&incident={3YearIncidentCount}&drivers={multidriverhouseholds}&homeowner={homeowner}&city={city}&state={state}&adcopy=2
+            Date    DomainName  Category        Product State   Impressions AvgPos  Clicks  CTR CPC TotCost LandingURL
+            8/1/2014    www.LibertyMutual.com   Standard Bid        Auto Insurance  CO  325 3.59    5   1.54%   $11.03  $55.16  http://welcome.libertymutual.com/campaigns/aggregators/v2/auto-insurance-TC.html?cmpgncde=252&keyCode=IABWA000&src=im-dagg-aut-brwCO1407103617&zipCode={zip}&pid={source_id}&clickid={engagementID}&insured={currentlyinsured}&age={age}&incident={incidenthistory}&drivers={multidriverhouseholds}&homeowner={homeowner}&firstName={firstname}&lastName={lastname}&streetAddress={address1}&city={city}&state={state}&adcopy=1
+            Date    Domain  Bid_Category    Product State   Description Impressions AvgPos  Clicks  CTR CPC TotCost CPL
+            1/1/2014 0:00   libertymutual.com   Standar Auto    CO  A   510 2.26    17  3.33%   $11.51  $195.69     http://welcome.libertymutual.com/campaigns/aggregators/v2/auto-insurance-TC.html?cmpgncde=252&keyCode=IABWA000&src=im-dagg-aut-brwCO1407103617&zipCode={bw_zip}&pid={bw_source}&clickid={bw_clickid}&insured={bw_currently_insured}&age={bw_age_of_driver}&incident={bw_incident_history}&drivers={bw_multi_driver_households}&homeowner={bw_homeowner}&firstName={bw_firstname}&lastName={bw_lastname}&streetAddress={bw_address1}&city={bw_city}&state={bw_st}&adcopy=1
+            Date    Domain  Bid_Category    Product State   Description Impressions AvgPos  Clicks  CTR CPC TotCost CPL
+            1/1/2013 0:00   libertymutual.com   Standar Auto    CT  A   194 3.04    12  6.19%   $14.62  $175.40     http://welcome.libertymutual.com/campaigns/aggregators/v2/auto-insurance-TC.html?cmpgncde=252&keyCode=IABWA000&src=im-dagg-aut-brwCT1407103618&zipCode={bw_zip}&pid={bw_source}&clickid={bw_clickid}&insured={bw_currently_insured}&age={bw_age_of_driver}&incident={bw_incident_history}&drivers={bw_multi_driver_households}&homeowner={bw_homeowner}&firstName={bw_firstname}&lastName={bw_lastname}&streetAddress={bw_address1}&city={bw_city}&state={bw_st}&adcopy=1
+             -->
+        <property name="datefield" value="Date"/>
+        <property name="location" value="/personal/project/marketing/vantage"/>
+    </properties>
+
+    <workflow name="vantage_ingest" version="2.0.0"
+              engine="oozie" path="/apps/workflow/json_to_hive_and_archive" />
+
+    <retry policy="periodic" delay="minutes(10)" attempts="6" />
+</process>

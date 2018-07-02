@@ -1,0 +1,13 @@
+[pdc-hadoop]
+
+[kdc-hadoop]
+tph01kdc
+tph02kdc
+tph03kdc
+tph04kdc
+tph05kdc
+tph06kdc
+
+[hadoop:children]
+pdc-hadoop
+kdc-hadoop

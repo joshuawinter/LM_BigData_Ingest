@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="uri:falcon:process:0.1" name="BingKeyword">
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2014-10-27T03:00Z" end="2024-12-30T00:00Z" />
+        </cluster>
+    </clusters>
+    <parallel>1</parallel>
+    <order>FIFO</order>
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+
+    <inputs>
+        <input name="input" feed="BingKeywordFlume" start="now(0,0)" end="now(0,0)" />
+    </inputs>
+
+    <outputs>
+        <output name="output" feed="BingKeywordArchive" instance="now(0,0)" />
+    </outputs>
+
+    <properties>
+        <property name="jobTracker" value="hdp001-yarn:8050" />
+        <property name="nameNode" value="hdfs://hdp001-nn:8020" />
+        <property name="table" value="bing_keyword" />
+        <property name="fields" value="
+            TimePeriod STRING, -- TIMESTAMP
+            AccountName STRING,
+            CampaignName STRING,
+            CampaignStatus STRING,
+            AdGroupStatus STRING,
+            Network STRING,
+            DeviceType STRING,
+            Impressions STRING, -- INT
+            Clicks STRING, -- INT
+            Spend STRING, -- DOUBLE
+            CurrentMaxCPC STRING, -- DOUBLE
+            AveragePosition STRING, -- DOUBLE
+            Keyword STRING,
+            BigMatchType STRING,
+            QualityScore STRING, -- INT
+            DestinationURL STRING" />
+        <property name="datefield" value="TimePeriod"/>
+        <property name="location" value="/personal/project/marketing/bing_keyword"/>
+    </properties>
+
+    <workflow name="bing_keyword_ingest" version="2.0.0"
+              engine="oozie" path="/apps/workflow/json_to_hive_and_archive" />
+
+    <retry policy="periodic" delay="minutes(10)" attempts="6" />
+</process>

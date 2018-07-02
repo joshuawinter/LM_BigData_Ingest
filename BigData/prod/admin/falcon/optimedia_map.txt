@@ -1,0 +1,93 @@
+Data Source,data_source
+Campaign ID,campaign_id
+Campaign Type,campaign_type
+Geography Targeting,geography_targeting
+Ad ID,ad_id
+Technology Spend,technology_spend
+Click-through URL,click_through_url
+Tracking Code,tracking_code
+Placement ID,placement_id
+Placement Cost Structure,placement_cost_structure
+Placement Group,placement_group
+Domain-Site,domain_site
+Home LOB,home_lob
+Site Name,site_name
+Site (DFA),site_dfa
+Site ID (DFA),site_id_dfa
+Site Type,site_type
+DFA Media Cost,dfa_media_cost
+DFA Impressions,dfa_impressions
+DFA Clicks,dfa_clicks
+DFA - Quote Starts,dfa_quote_starts
+DFA - Proposal Quote Starts,dfa_proposal_quote_starts
+DFA - Quote Completes,dfa_quote_completes
+DFA - Binds,dfa_binds
+Policy RDC Score - A,policy_rdc_score_a
+Policy RDC Score - B,policy_rdc_score_b
+Policy RDC Score - C,policy_rdc_score_c
+Policy RDC Score - D,policy_rdc_score_d
+Creative ID,creative_id
+Creative Size,creative_size
+Creative Pixel Size,creative_pixel_size
+Creative Bucketing,creative_bucketing
+Creative Concept,creative_concept
+Creative Type,creative_type
+Creative Field 1,creative_field_1
+DRC_NB_INET_Assist_Gross_Produced,drc_nb_inet_assist_grss_prdcd
+DRC_INET_Gross_Policy_Premium_Amount,drc_inet_grss_pol_prem_amt
+INET_NB_Gross_Produced,inet_nb_gross_produced
+INET_Gross_Policy_Premium_Amount,inet_grss_pol_prem_amt
+Field_NB_INET_Assist_Gross_Produced,fld_nb_inet_assist_grss_prdcd
+Field_INET_Gross_Policy_Premium_Amount,fld_inet_grss_pol_prem_amt
+OMN - Visits,omn_visits
+OMN - Quote Starts,omn_quote_starts
+OMN - Proposal Quote Starts,omn_proposal_quote_starts
+OMN - Quote Completes,omn_quote_completes
+Application : Proposal Start - AUTO: View-through Conversions,prop_st_auto_vw_thru_cnvrsns
+Application : Proposal Start - AUTO: Click-through Conversions,prop_st_auto_clk_thru_cnvrsns
+Application : Proposal Start - AUTO: Total Conversions,prop_st_auto_tot_cnvrsns
+Application : Proposal Start - CONDO: View-through Conversions,prop_st_condo_vw_thru_cnvrsns
+Application : Proposal Start - CONDO: Click-through Conversions,prop_st_condo_clk_thru_cnvrsns
+Application : Proposal Start - CONDO: Total Conversions,prop_st_condo_tot_cnvrsns
+Application : Proposal Start - HOME: View-through Conversions,prop_st_home_vw_thru_cnvrsns
+Application : Proposal Start - HOME: Click-through Conversions,prop_st_home_clk_thru_cnvrsns
+Application : Proposal Start - HOME: Total Conversions,prop_st_home_tot_cnvrsns
+Application : Proposal Start - RENTERS: View-through Conversions,prop_st_rent_vw_thru_cnvrsns
+Application : Proposal Start - RENTERS: Click-through Conversions,prop_st_rent_clk_thru_cnvrsns
+Application : Proposal Start - RENTERS: Total Conversions,prop_st_rent_tot_cnvrsns
+Application : Quote Start - AUTO: View-through Conversions,qt_st_auto_vw_thru_cnvrsns
+Application : Quote Start - AUTO: Click-through Conversions,qt_st_auto_clk_thru_cnvrsns
+Application : Quote Start - AUTO: Total Conversions,qt_st_auto_tot_cnvrsns
+Application : Quote Start - CONDO: View-through Conversions,qt_st_condo_vw_thru_cnvrsns
+Application : Quote Start - CONDO: Click-through Conversions,qt_st_condo_clk_thru_cnvrsns
+Application : Quote Start - CONDO: Total Conversions,qt_st_condo_tot_cnvrsns
+Application : Quote Start - HOME: View-through Conversions,qt_st_home_vw_thru_cnvrsns
+Application : Quote Start - HOME: Click-through Conversions,qt_st_home_clk_thru_cnvrsns
+Application : Quote Start - HOME: Total Conversions,qt_st_home_tot_cnvrsns
+Application : Quote Start - RENTERS: View-through Conversion,qt_st_rent_vw_thru_cnvrsns
+Application : Quote Start - RENTERS: Click-through Conversions,qt_st_rent_clk_thru_cnvrsns
+Application : Quote Start - RENTERS: Total Conversions,qt_st_rent_tot_cnvrsns
+Application : Quote Complete - AUTO: View-through Conversions,qt_cmplt_auto_vw_thru_cnvrsns
+Application : Quote Complete - AUTO: Click-through Conversions,qt_cmplt_auto_clk_thru_cnvrsns
+Application : Quote Complete - AUTO: Total Conversions,qt_cmplt_auto_tot_cnvrsns
+Application : Quote Complete - CONDO: View-through Conversions,qt_cmplt_condo_vw_thru_cnvrsns
+Application : Quote Complete - CONDO: Click-through Conversions,qt_cmplt_condo_clk_thru_cnvrsn
+Application : Quote Complete - CONDO: Total Conversions,qt_cmplt_condo_tot_cnvrsns
+Application : Quote Complete - HOME: View-through Conversions,qt_cmplt_home_vw_thru_cnvrsns
+Application : Quote Complete - HOME: Click-through Conversions,qt_cmplt_home_clk_thru_cnvrsns
+Application : Quote Complete - HOME: Total Conversions,qt_cmplt_home_tot_cnvrsns
+Application : Quote Complete - RENTERS: View-through Conversions,qt_cmplt_rent_vw_thru_cnvrsns
+Application : Quote Complete - RENTERS: Click-through Conversions,qt_cmplt_rent_clk_thru_cnvrsns
+Application : Quote Complete - RENTERS: Total Conversions,qt_cmplt_rent_tot_cnvrsns
+Application : Bind Complete - AUTO: View-through Conversion,bnd_cmplt_auto_vw_thru_cnvrsns
+Application : Bind Complete - AUTO: Click-through Conversions,bnd_cmplt_auto_clk_thru_cnvrsn
+Application : Bind Complete - AUTO: Total Conversions,bnd_cmplt_auto_tot_cnvrsns
+Application : Bind Complete - CONDO: View-through Conversions,bnd_cmplt_condo_vw_thru_cnvrsn
+Application : Bind Complete - CONDO: Click-through Conversions,bnd_cmplt_condo_clk_thru_cnvsn
+Application : Bind Complete - CONDO: Total Conversions,bnd_cmplt_condo_tot_cnvrsns
+Application : Bind Complete - HOME: View-through Conversions,bnd_cmplt_home_vw_thru_cnvrsns
+Application : Bind Complete - HOME: Click-through Conversions,bnd_cmplt_home_clk_thru_cnvrsn
+Application : Bind Complete - HOME: Total Conversions,bnd_cmplt_home_tot_cnvrsns
+Application : Bind Complete - RENTERS: View-through Conversions,bnd_cmplt_rent_vw_thru_cnvrsns
+Application : Bind Complete - RENTERS: Click-through Conversions,bnd_cmplt_rent_clk_thru_cnvrsn
+Application : Bind Complete - RENTERS: Total Conversions,bnd_cmplt_rent_tot_cnvrsns

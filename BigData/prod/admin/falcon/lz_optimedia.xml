@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<feed description="Optimedia report data" name="OptimediaFlume" xmlns="uri:falcon:feed:0.1">
+    <groups>optimediaIn</groups>
+
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+    <late-arrival cut-off="hours(1)" />
+
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2014-01-01T00:00Z" end="2099-12-31T00:00Z" />
+            <retention limit="hours(168)" action="delete" />
+        </cluster>
+    </clusters>
+
+    <locations>
+        <!-- path must match the flume.conf value -->
+        <location type="data" path="/lz/marketing/b2b/optimedia/${YEAR}-${MONTH}-${DAY}-${HOUR}" />
+    </locations>
+
+    <ACL owner="flume" group="flume" permission="0x700" />
+
+    <schema location="/none" provider="none" />
+</feed>

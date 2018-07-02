@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<cluster colo="PDC" description="virtual machines" name="hadoop"
+    xmlns="uri:falcon:cluster:0.1">
+
+    <interfaces>
+        <!-- Required for distcp for replications. -->
+        <interface type="readonly" endpoint="hftp://hdp001-nn:50070" version="2.2.0" />
+
+        <!-- Needed for writing to HDFS-->
+        <interface type="write" endpoint="hdfs://hdp001-nn:8020" version="2.2.0" />
+
+        <!-- Needed to write to jobs as MapReduce-->
+        <interface type="execute" endpoint="hdp001-yarn:8050" version="2.2.0" />
+
+        <!-- Required. Submits Oozie jobs.-->
+        <interface type="workflow" endpoint="http://hdp001-oozie:11000/oozie/" version="4.0.0" />
+
+        <!--Register/deregister partitions in the Hive Metastore and get events on partition availability -->
+        <interface type="registry" endpoint="thrift://hdp001-hive:9083" version="0.13.0" />
+
+        <!--Needed for alerts-->
+        <interface type="messaging" endpoint="tcp://tph18pdc:61616?daemon=true" version="5.1.6" />
+   </interfaces>
+
+    <locations>
+        <!--HDFS directories used by the Falcon server-->
+        <location name="staging" path="/apps/falcon/prod/staging" />
+        <location name="temp" path="/tmp" />
+        <location name="working" path="/apps/falcon/prod/working" />
+    </locations>
+
+    <properties>
+    </properties>
+</cluster>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="uri:falcon:process:0.1" name="Bankrate">
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2014-10-18T00:00Z" end="2024-12-30T00:00Z" />
+        </cluster>
+    </clusters>
+    <parallel>1</parallel>
+    <order>FIFO</order>
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+
+    <inputs>
+        <input name="input" feed="BankrateFlume" start="now(0,0)" end="now(0,0)" />
+    </inputs>
+
+    <outputs>
+        <output name="output" feed="BankrateArchive" instance="now(0,0)" />
+    </outputs>
+
+    <properties>
+        <property name="jobTracker" value="hdp001-yarn:8050" />
+        <property name="nameNode" value="hdfs://hdp001-yarn:8020" />
+        <property name="table" value="bankrate" />
+        <property name="fields" value="
+            Dates STRING, -- TIMESTAMP
+            Clicks STRING, -- INT
+            Source_ID STRING,
+            AdvertiserId STRING,
+            ShortSerialNumber STRING,
+            DeviceType STRING,
+            State STRING,
+            Zipcode STRING,
+            Age STRING,
+            Gender STRING,
+            Marital_Status STRING,
+            Homeownership_Status STRING,
+            AARP_Member STRING,
+            Education STRING,
+            Credithistory STRING,
+            Insured STRING,
+            SR22 STRING,
+            Leased STRING,
+            MovingAccidentds STRING, -- INT
+            PrimaryUse STRING,
+            MultipleVehicles STRING,
+            CurrentCarrier STRING,
+            PolicyExpiration STRING,
+            LengthInsured STRING,
+            CoverageLevel STRING" />
+        <!-- dates,clicks,Source_ID,State,ShortSerialNumber,Age,Marital_Status,Homeownership_Status,AARP_Member,Insured,DeviceType,Zipcode,AdvertiserId,Education,Credithistory,SR22,Leased,MovingAccidentds,PrimaryUse,MultipleVehicles,CurrentCarrier,PolicyExpiration,LengthInsured,Gender,CoverageLevel
+            10/1/2014,1,530927,NC,114671795,NULL,NULL,non-homeowner,Null,Null,Desktop,27609,193855489,Null,Null,Null,Null,Null,Null,Null,Null,Null,Null,Null,Null
+            10/1/2014,1,380466,NC,114346971,24-34,Single,non-homeowner,Null,TRUE,Desktop,27265,193855489,GED,Good,No,No,1,CommuteWork,Yes,Company Not Listed,10/15/2014,2,Male,Superior -->
+        <property name="datefield" value="Date"/>
+        <property name="location" value="/personal/project/marketing/bankrate"/>
+    </properties>
+
+    <workflow name="bankrate_ingest" version="2.0.0"
+              engine="oozie" path="/apps/workflow/json_to_hive_and_archive" />
+
+    <retry policy="periodic" delay="minutes(10)" attempts="6" />
+</process>

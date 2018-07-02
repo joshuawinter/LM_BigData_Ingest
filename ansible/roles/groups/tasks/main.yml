@@ -1,0 +1,15 @@
+---
+  - name: Set up group pi_Big_Data
+    group: name="pi_Big_Data" gid="10000"
+
+  - name: Set up group pi_Big_Data_LMIG
+    group: name="pi_Big_Data_LMIG" gid="10001"
+
+  - name: Set up group pi_Big_Data_Developer
+    group: name="pi_Big_Data_Developer" gid="10002"
+
+  - name: Set up group pi_big_data_lmig_admin
+    group: name="pi_big_data_lmig_admin" gid="10003"
+
+  - name: Set up group pi_Big_Data_LMIG_Developer
+    group: name="pi_Big_Data_LMIG_Developer" gid="10004"

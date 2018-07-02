@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="uri:falcon:process:0.1" name="GoogleGeog">
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2014-11-03T00:00Z" end="2024-12-30T00:00Z" />
+        </cluster>
+    </clusters>
+    <parallel>1</parallel>
+    <order>FIFO</order>
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+
+    <inputs>
+        <input name="input" feed="GoogleGeogFlume" start="now(0,0)" end="now(0,0)" />
+    </inputs>
+
+    <outputs>
+        <output name="output" feed="GoogleGeogArchive" instance="now(0,0)" />
+    </outputs>
+
+    <properties>
+        <property name="jobTracker" value="hdp001-yarn:8050" />
+        <property name="nameNode" value="hdfs://hdp001-nn:8020" />
+        <property name="table" value="google_geog" />
+        <property name="fields" value="
+            Date STRING, -- TIMESTAMP
+            AccountDescriptiveName STRING,
+            CustomerDescriptiveName STRING,
+            PrimaryCompanyName STRING,
+            CampaignId STRING,
+            CampaignStatus STRING,
+            AdGroupName STRING,
+            AdGroupStatus STRING,
+            AdNetworkType1 STRING,
+            Device STRING,
+            Impressions STRING, -- INT
+            Clicks STRING, -- INT
+            Conversions STRING, -- INT
+            Cost STRING, -- DOUBLE
+            AveragePosition STRING, -- DOUBLE
+            CountryCriteriaId STRING,
+            RegionCriteriaId STRING,
+            MetroCriteriaId STRING,
+            CityCriteriaId STRING" />
+        <property name="datefield" value="Date"/>
+        <property name="location" value="/personal/project/marketing/google_geog"/>
+    </properties>
+
+    <workflow name="google_geog_ingest" version="2.0.0"
+              engine="oozie" path="/apps/workflow/json_to_hive_and_archive" />
+
+    <retry policy="periodic" delay="minutes(10)" attempts="6" />
+</process>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="uri:falcon:process:0.1" name="Quinstreet">
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2014-10-24T00:00Z" end="2024-12-30T00:00Z" />
+        </cluster>
+    </clusters>
+    <parallel>1</parallel>
+    <order>FIFO</order>
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+
+    <inputs>
+        <input name="input" feed="QuinstreetFlume" start="now(0,0)" end="now(0,0)" />
+    </inputs>
+
+    <outputs>
+        <output name="output" feed="QuinstreetArchive" instance="now(0,0)" />
+    </outputs>
+
+    <properties>
+        <property name="jobTracker" value="hdp001-yarn:8050" />
+        <property name="nameNode" value="hdfs://hdp001-nn:8020" />
+        <property name="table" value="quinstreet" />
+        <property name="fields" value="
+            TrafficDate STRING, -- TIMESTAMP
+            AdvAccountName STRING,
+            State STRING,
+            Impressions STRING, -- INT
+            Clicks STRING, -- INT
+            NetCost STRING, -- DOUBLE
+            Calls STRING, -- INT
+            QualifiedCalls STRING, -- INT
+            CallNetCost STRING, -- DOUBLE
+            AutoConversion STRING, -- INT
+            HomeConversion STRING, -- INT
+            AvgCPC STRING -- DOUBLE" />
+        <property name="datefield" value="TrafficDate"/>
+        <property name="location" value="/personal/project/marketing/quinstreet"/>
+    </properties>
+
+    <workflow name="quinstreet_ingest" version="2.0.0"
+              engine="oozie" path="/apps/workflow/json_to_hive_and_archive" />
+
+    <retry policy="periodic" delay="minutes(10)" attempts="6" />
+</process>

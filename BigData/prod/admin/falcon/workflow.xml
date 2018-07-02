@@ -1,0 +1,107 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="landing_zone_json_to_hive_and_archive">
+    <start to="create_target_table" />
+
+    <action name="create_target_table">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>/bin/bash</exec>
+            <argument>create_hive_table.sh</argument>
+            <argument>${table}</argument>
+            <argument>${location}</argument>
+            <argument>${fields}</argument>
+            <file>/apps/workflow/json_to_hive_and_archive/create_hive_table.sh#create_hive_table.sh</file>
+            <file>/apps/workflow/json_to_hive_and_archive/get_hive_names.py#get_hive_names.py</file>
+        </shell>
+        <ok to="create_json_table" />
+        <error to="fail" />
+    </action>
+
+    <action name="create_json_table">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>/bin/bash</exec>
+            <argument>create_json_table.sh</argument>
+            <argument>${table}_json_${replaceAll(wf:id(), '-', '_')}</argument>
+            <argument>${input}</argument>
+            <argument>${fields}</argument>
+            <file>/apps/workflow/json_to_hive_and_archive/create_json_table.sh#create_json_table.sh</file>
+            <file>/apps/workflow/json_to_hive_and_archive/get_json_names.py#get_json_names.py</file>
+            <file>/apps/workflow/json_to_hive_and_archive/get_json_to_hive_map.py#get_json_to_hive_map.py</file>
+        </shell>
+        <ok to="split_json" />
+        <error to="fail" />
+    </action>
+
+    <action name="split_json">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>/bin/bash</exec>
+            <argument>json_to_table.sh</argument>
+            <argument>--datefield</argument>
+            <argument>${datefield}</argument>
+            <argument>${table}_json_${replaceAll(wf:id(), '-', '_')}</argument>
+            <argument>${table}</argument>
+            <file>/apps/workflow/json_to_hive_and_archive/json_to_table.sh#json_to_table.sh</file>
+            <file>/apps/workflow/json_to_hive_and_archive/json_to_table.py#json_to_table.py</file>
+        </shell>
+        <ok to="delete_json_table" />
+        <error to="delete_json_table_anyway" />
+    </action>
+
+    <action name="delete_json_table">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>/bin/bash</exec>
+            <argument>delete_json_table.sh</argument>
+            <argument>${table}_json_${replaceAll(wf:id(), '-', '_')}</argument>
+            <file>/apps/workflow/json_to_hive_and_archive/delete_json_table.sh#delete_json_table.sh</file>
+        </shell>
+        <ok to="create_archive_directory" />
+        <error to="fail" />
+    </action>
+
+    <action name="create_archive_directory">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>/bin/bash</exec>
+            <argument>create_archive_directory.sh</argument>
+            <argument>${output}</argument>
+            <file>/apps/workflow/json_to_hive_and_archive/create_archive_directory.sh#create_archive_directory.sh</file>
+        </shell>
+        <ok to="archive" />
+        <error to="fail" />
+    </action>
+
+    <action name="archive">
+        <fs>
+            <move source="${input}" target="${output}" />
+        </fs>
+        <ok to="end" />
+        <error to="fail" />
+    </action>
+
+    <action name="delete_json_table_anyway">
+        <shell xmlns="uri:oozie:shell-action:0.1">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <exec>/bin/bash</exec>
+            <argument>delete_json_table.sh</argument>
+            <argument>${table}_json_${replaceAll(wf:id(), '-', '_')}</argument>
+            <file>/apps/workflow/json_to_hive_and_archive/delete_json_table.sh#delete_json_table.sh</file>
+        </shell>
+        <ok to="fail" />
+        <error to="fail" />
+    </action>
+
+
+    <kill name="fail">
+        <message>Workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+
+    <end name="end" />
+</workflow-app>

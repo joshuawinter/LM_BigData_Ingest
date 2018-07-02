@@ -1,0 +1,10 @@
+---
+  - name: Set up n0003528
+    user: comment="Peter Underwood" group="hadoop" name="n0003528"
+      shell=/sbin/nologin uid="10000"
+      groups="pi_Big_Data_Developer,pi_Big_Data_LMIG,pi_big_data_lmig_admin,pi_Big_Data_LMIG_Developer,pi_Big_Data"
+
+  - name: Set up n0255159
+    user: comment="Alan Brenner" group="hadoop" name="n0255159"
+      shell=/sbin/nologin uid="10001"
+      groups="pi_Big_Data_Developer,pi_Big_Data_LMIG,pi_big_data_lmig_admin,pi_Big_Data_LMIG_Developer,pi_Big_Data"

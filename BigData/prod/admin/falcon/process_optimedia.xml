@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process xmlns="uri:falcon:process:0.1" name="Optimedia">
+    <clusters>
+        <cluster name="hadoop">
+            <validity start="2014-10-24T00:00Z" end="2024-12-30T00:00Z" />
+        </cluster>
+    </clusters>
+    <parallel>1</parallel>
+    <order>FIFO</order>
+    <frequency>hours(1)</frequency>
+    <timezone>UTC</timezone>
+
+    <inputs>
+        <input name="input" feed="OptimediaFlume" start="now(0,0)" end="now(0,0)" />
+    </inputs>
+
+    <outputs>
+        <output name="output" feed="OptimediaArchive" instance="now(0,0)" />
+    </outputs>
+
+    <properties>
+        <property name="jobTracker" value="hdp001-yarn:8050" />
+        <property name="nameNode" value="hdfs://hdp001-nn:8020" />
+        <property name="table" value="optimedia" />
+        <property name="fields" value="
+            Date        STRING, -- TIMESTAMP
+            Week        STRING,
+            Month       STRING,
+            Data Source STRING,
+            Campaign    STRING,
+            Campaign ID STRING,
+            Campaign Type       STRING,
+            Targeting   STRING,
+            Geography Targeting STRING,
+            Goal        STRING,
+            Tactic      STRING,
+            Offer       STRING,
+            Channel     STRING,
+            Affinity	STRING,
+            Product     STRING,
+            CTA STRING,
+            Ad  STRING,
+            Ad ID STRING,
+            Rate STRING, -- DOUBLE
+            Spend STRING, -- DOUBLE
+            Technology Spend STRING, -- DOUBLE
+            Impressions STRING, -- INT
+            Clicks STRING, -- INT
+            Click-through URL   STRING,
+            Tracking Code       STRING,
+            Placement   STRING,
+            Placement ID STRING,
+            Placement Cost Structure    STRING,
+            Placement Group     STRING,
+            Domain      STRING,
+            Domain-Site STRING,
+            LOB STRING,
+            Home LOB STRING,
+            Site Name   STRING,
+            Site (DFA) STRING,
+            Site ID (DFA) STRING,
+            Site Type   STRING,
+            DFA Media Cost STRING, -- DOUBLE
+            DFA Impressions STRING, -- INT
+            DFA Clicks STRING, -- INT
+            DFA - Quote Starts STRING, --INT
+            DFA - Proposal Quote Starts STRING, --INT
+            DFA - Quote Completes STRING, --INT
+            DFA - Binds STRING, -- INT
+            Policy RDC Score - A STRING, -- INT
+            Policy RDC Score - B STRING, -- INT
+            Policy RDC Score - C STRING, -- INT
+            Policy RDC Score - D STRING, -- INT            
+            Creative    STRING,
+            Creative ID STRING,
+            Creative Size STRING,
+            Creative Pixel Size STRING,
+            Creative Concept STRING,
+            Creative Bucketing STRING,
+            Creative Type STRING,
+            Creative Field 1 STRING,
+            DRC_NB_INET_Assist_Gross_Produced STRING, -- INT
+            DRC_INET_Gross_Policy_Premium_Amount STRING, -- INT
+            INET_NB_Gross_Produced STRING, -- INT
+            INET_Gross_Policy_Premium_Amount STRING, -- INT
+            Field_NB_INET_Assist_Gross_Produced STRING, -- INT
+            Field_INET_Gross_Policy_Premium_Amount STRING, -- INT
+            OMN - Visits STRING, -- INT
+            OMN - Quote Starts STRING, -- INT
+            OMN - Proposal Quote Starts STRING, -- INT
+            OMN - Quote Completes STRING, -- INT
+            Application : Bind Complete - CONDO: View-through Conversions STRING,
+            Application : Bind Complete - CONDO: Click-through Conversions STRING,
+            Application : Bind Complete - CONDO: Total Conversions STRING,
+            Application : Bind Complete - HOME: View-through Conversions STRING,
+            Application : Bind Complete - HOME: Click-through Conversions STRING,
+            Application : Bind Complete - HOME: Total Conversions STRING,
+            Application : Bind Complete - RENTERS: View-through Conversions STRING,
+            Application : Bind Complete - RENTERS: Click-through Conversions STRING,
+            Application : Bind Complete - RENTERS: Total Conversions STRING,
+            Application : Bind Complete - AUTO: View-through Conversions STRING,
+            Application : Bind Complete - AUTO: Click-through Conversions STRING,
+            Application : Bind Complete - AUTO: Total Conversions STRING,
+            Application : Proposal Start - AUTO: View-through Conversions STRING,
+            Application : Proposal Start - AUTO: Click-through Conversions STRING,
+            Application : Proposal Start - AUTO: Total Conversions STRING,
+            Application : Proposal Start - CONDO: View-through Conversions STRING,
+            Application : Proposal Start - CONDO: Click-through Conversions STRING,
+            Application : Proposal Start - CONDO: Total Conversions STRING,
+            Application : Proposal Start - HOME: View-through Conversions STRING,
+            Application : Proposal Start - HOME: Click-through Conversions STRING,
+            Application : Proposal Start - HOME: Total Conversions STRING,
+            Application : Proposal Start - RENTERS: View-through Conversions STRING,
+            Application : Proposal Start - RENTERS: Click-through Conversions STRING,
+            Application : Proposal Start - RENTERS: Total Conversions STRING,
+            Application : Quote Complete - AUTO: View-through Conversions STRING,
+            Application : Quote Complete - AUTO: Click-through Conversions STRING,
+            Application : Quote Complete - AUTO: Total Conversions STRING,
+            Application : Quote Complete - CONDO: View-through Conversions STRING,
+            Application : Quote Complete - CONDO: Click-through Conversions STRING,
+            Application : Quote Complete - CONDO: Total Conversions STRING,
+            Application : Quote Complete - HOME: View-through Conversions STRING,
+            Application : Quote Complete - HOME: Click-through Conversions STRING,
+            Application : Quote Complete - HOME: Total Conversions STRING,
+            Application : Quote Complete - RENTERS: View-through Conversions STRING,
+            Application : Quote Complete - RENTERS: Click-through Conversions STRING,
+            Application : Quote Complete - RENTERS: Total Conversions STRING,
+            Application : Quote Start - AUTO: View-through Conversions STRING,
+            Application : Quote Start - AUTO: Click-through Conversions STRING,
+            Application : Quote Start - AUTO: Total Conversions STRING,
+            Application : Quote Start - CONDO: View-through Conversions STRING,
+            Application : Quote Start - CONDO: Click-through Conversions STRING,
+            Application : Quote Start - CONDO: Total Conversions STRING,
+            Application : Quote Start - HOME: View-through Conversions STRING,
+            Application : Quote Start - HOME: Click-through Conversions STRING,
+            Application : Quote Start - HOME: Total Conversions STRING,
+            Application : Quote Start - RENTERS: View-through Conversions STRING,
+            Application : Quote Start - RENTERS: Click-through Conversions STRING,
+            Application : Quote Start - RENTERS: Total Conversions STRING" />
+        <property name="datefield" value="Date"/> <!-- 1/4/2014 -->
+        <property name="location" value="/personal/project/marketing/optimedia"/>
+    </properties>
+
+    <workflow name="optimedia_ingest" version="2.0.0"
+              engine="oozie" path="/apps/workflow/json_to_hive_and_archive" />
+
+    <retry policy="periodic" delay="minutes(10)" attempts="6" />
+</process>

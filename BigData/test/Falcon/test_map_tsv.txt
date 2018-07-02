@@ -1,0 +1,8 @@
+Creative Field 1	creative_field_1
+DRC_NB_INET_Assist_Gross_Produced	drc_nb_inet_assist_grss_prdcd
+DRC_INET_Gross_Policy_Premium_Amount	drc_inet_grss_pol_prem_amt
+INET_NB_Gross_Produced	inet_nb_gross_produced
+OMN - Quote Completes	omn_quote_completes
+Application : Proposal Start - AUTO: View-through Conversions	prop_st_auto_vw_thru_cnvrsns
+Application : Bind Complete - CONDO: View-through Conversions	bnd_cmplt_condo_vw_thru_cnvrsn
+Application : Bind Complete - CONDO: Click-through Conversions	bnd_cmplt_condo_clk_thru_cnvsn
